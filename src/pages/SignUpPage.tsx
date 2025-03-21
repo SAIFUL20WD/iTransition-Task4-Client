@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { HiMiniBuildingOffice } from "react-icons/hi2";
 import { useState } from "react";
+import handleError from "../utility/handleError";
 
 const SignInPage = () => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -37,7 +38,7 @@ const SignInPage = () => {
 				}
 			} catch (error) {
 				toast.dismiss("signup");
-				toast.error(error?.response?.data?.message);
+				handleError(error);
 			}
 		},
 	});

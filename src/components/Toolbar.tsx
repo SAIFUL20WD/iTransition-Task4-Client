@@ -4,6 +4,7 @@ import { deleteUsers, updateUserStatus } from "../api/apiRequest";
 import { AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import handleError from "../utility/handleError";
 
 type TToolbarProps = {
 	selectedUsers: number[];
@@ -26,7 +27,7 @@ const Toolbar = ({ selectedUsers, setSelectedUsers }: TToolbarProps) => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},
 		onError: (error) => {
-			toast.error(error?.response?.data?.message);
+			handleError(error);
 			navigate("/signin");
 		},
 	});
@@ -38,7 +39,7 @@ const Toolbar = ({ selectedUsers, setSelectedUsers }: TToolbarProps) => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},
 		onError: (error) => {
-			toast.error(error?.response?.data?.message);
+			handleError(error);
 			navigate("/signin");
 		},
 	});

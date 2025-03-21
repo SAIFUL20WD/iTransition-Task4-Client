@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { setToken } from "../utility/tokenHelper";
 import { useState } from "react";
+import handleError from "../utility/handleError";
 
 const SignInPage = () => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -35,7 +36,7 @@ const SignInPage = () => {
 				}
 			} catch (error) {
 				toast.dismiss("signin");
-				toast.error(error?.response?.data?.message);
+				handleError(error);
 			}
 		},
 	});

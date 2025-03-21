@@ -4,8 +4,10 @@ import Navbar from "../components/Navbar";
 import Toolbar from "../components/Toolbar";
 import UserTable from "../components/UserTable";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import handleError from "../utility/handleError";
+import { AxiosError } from "axios";
 
 const DashboardPage = () => {
 	const { data, isLoading, isSuccess, isError, error } = useQuery({
@@ -15,11 +17,14 @@ const DashboardPage = () => {
 	});
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 	const navigate = useNavigate();
+
 	if (isError) {
-		toast.error(error?.response?.data?.message);
-		const status = error?.response?.status;
-		if (status === 403 || status === 400) {
-			navigate("/signin");
+		if (error instanceof AxiosError) {
+			handleError(error);
+			const status = error?.response?.status;
+			if (status === 403 || status === 400) {
+				navigate("/signin");
+			}
 		}
 	}
 	// 	const selectedUserData = data?.data?.data?.filter((user: TUser) => selectedUsers.includes(user.id));
